@@ -18,6 +18,8 @@ const timeEl = document.getElementById("time");
 const greetingEl = document.getElementById("greeting");
 const nameInput = document.getElementById("name-input");
 const saveNameBtn = document.getElementById("save-name");
+const nameForm = document.getElementById("name-form");
+const changeNameBtn = document.getElementById("change-name");
 
 let userName = load("userName", "");
 
@@ -31,6 +33,18 @@ function getGreeting(hour) {
 function renderGreeting(now) {
   const text = getGreeting(now.getHours());
   greetingEl.textContent = userName ? text + ", " + userName : text;
+}
+
+function updateNameForm() {
+  const hasName = userName !== "";
+  nameForm.hidden = hasName;        // sembunyikan form kalau nama sudah ada
+  changeNameBtn.hidden = !hasName;  // tampilkan tombol "Ubah nama"
+}
+
+function showNameForm() {
+  nameForm.hidden = false;
+  changeNameBtn.hidden = true;
+  nameInput.focus();
 }
 
 function updateClock() {
@@ -49,17 +63,20 @@ function saveName() {
   userName = nameInput.value.trim();
   save("userName", userName);
   renderGreeting(new Date());
+  updateNameForm();
 }
 
 saveNameBtn.addEventListener("click", saveName);
+changeNameBtn.addEventListener("click", showNameForm);
 nameInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") saveName();
 });
 
-// ===== Inisialisasi =====
+// Inisialisasi greeting
 nameInput.value = userName;
 updateClock();
 setInterval(updateClock, 1000);
+updateNameForm();
 
 // ===== Focus Timer =====
 const timerDisplay = document.getElementById("timer-display");
@@ -116,9 +133,13 @@ const taskInput = document.getElementById("task-input");
 const addTaskBtn = document.getElementById("add-task");
 const taskList = document.getElementById("task-list");
 const taskMessage = document.getElementById("task-message");
+const sortSelect = document.getElementById("sort-select");
 
 let tasks = load("tasks", []);
 if (!Array.isArray(tasks)) tasks = []; // jaga-jaga kalau data rusak
+
+let sortMode = load("taskSort", "none");
+if (!["none", "status", "alpha"].includes(sortMode)) sortMode = "none";
 
 function showTaskMessage(text) {
   taskMessage.textContent = text;
@@ -128,10 +149,7 @@ function saveTasks() {
   save("tasks", tasks);
 }
 
-let sortMode = load("taskSort", "none");
-if (!["none", "status", "alpha"].includes(sortMode)) sortMode = "none";
-const sortSelect = document.getElementById("sort-select");
-
+// Cek duplikat tanpa membedakan huruf besar/kecil
 function isDuplicate(text, ignoreId) {
   const lower = text.toLowerCase();
   return tasks.some(function (t) {
@@ -139,8 +157,9 @@ function isDuplicate(text, ignoreId) {
   });
 }
 
+// Urutkan salinan daftar, supaya urutan asli tidak berubah
 function getSortedTasks() {
-  const list = tasks.slice(); // salinan, supaya urutan asli tidak berubah
+  const list = tasks.slice();
   if (sortMode === "status") {
     list.sort(function (a, b) { return Number(a.done) - Number(b.done); });
   } else if (sortMode === "alpha") {
@@ -184,11 +203,10 @@ function editTask(id) {
     showTaskMessage("Tugas tidak boleh kosong.");
     return;
   }
-    if (isDuplicate(trimmed, id)) {
+  if (isDuplicate(trimmed, id)) {
     showTaskMessage("Tugas ini sudah ada di daftar.");
     return;
   }
-
   task.text = trimmed;
   saveTasks();
   showTaskMessage("");
@@ -227,16 +245,17 @@ function renderTasks() {
     taskList.appendChild(li);
   });
 }
+
+addTaskBtn.addEventListener("click", addTask);
+taskInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") addTask();
+});
+
 sortSelect.value = sortMode;
 sortSelect.addEventListener("change", function () {
   sortMode = sortSelect.value;
   save("taskSort", sortMode);
   renderTasks();
-});
-
-addTaskBtn.addEventListener("click", addTask);
-taskInput.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") addTask();
 });
 
 renderTasks();
@@ -300,7 +319,7 @@ function renderLinks() {
     const anchor = document.createElement("a");
     anchor.href = link.url;
     anchor.textContent = link.name;
-    anchor.target = "_blank";          // buka di tab baru
+    anchor.target = "_blank";           // buka di tab baru
     anchor.rel = "noopener noreferrer"; // keamanan
 
     const deleteBtn = document.createElement("button");

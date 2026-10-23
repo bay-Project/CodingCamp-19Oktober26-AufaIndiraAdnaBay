@@ -370,3 +370,24 @@ button:active {
     transition: none;
   }
 }
+
+
+[hidden] {
+  display: none !important;
+}
+
+
+#greeting-card #change-name {
+  align-self: flex-start;
+  padding: 4px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e0e7ff;
+  background: transparent;
+  text-decoration: underline;
+}
+
+#greeting-card #change-name:hover {
+  color: #ffffff;
+  background: transparent;
+}
