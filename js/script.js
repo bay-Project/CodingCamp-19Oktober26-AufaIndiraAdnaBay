@@ -110,3 +110,97 @@ function resetTimer() {
 startBtn.addEventListener("click", startTimer);
 stopBtn.addEventListener("click", stopTimer);
 resetBtn.addEventListener("click", resetTimer);
+
+// ===== To-Do List =====
+const taskInput = document.getElementById("task-input");
+const addTaskBtn = document.getElementById("add-task");
+const taskList = document.getElementById("task-list");
+const taskMessage = document.getElementById("task-message");
+
+let tasks = load("tasks", []);
+if (!Array.isArray(tasks)) tasks = []; // jaga-jaga kalau data rusak
+
+function showTaskMessage(text) {
+  taskMessage.textContent = text;
+}
+
+function saveTasks() {
+  save("tasks", tasks);
+}
+
+function addTask() {
+  const text = taskInput.value.trim();
+  if (text === "") {
+    showTaskMessage("Tugas tidak boleh kosong.");
+    return;
+  }
+  tasks.push({ id: Date.now(), text: text, done: false });
+  saveTasks();
+  taskInput.value = "";
+  showTaskMessage("");
+  renderTasks();
+}
+
+function toggleTask(id) {
+  const task = tasks.find(function (t) { return t.id === id; });
+  if (!task) return;
+  task.done = !task.done;
+  saveTasks();
+  renderTasks();
+}
+
+function editTask(id) {
+  const task = tasks.find(function (t) { return t.id === id; });
+  if (!task) return;
+  const newText = prompt("Edit tugas:", task.text);
+  if (newText === null) return; // dibatalkan
+  const trimmed = newText.trim();
+  if (trimmed === "") {
+    showTaskMessage("Tugas tidak boleh kosong.");
+    return;
+  }
+  task.text = trimmed;
+  saveTasks();
+  showTaskMessage("");
+  renderTasks();
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(function (t) { return t.id !== id; });
+  saveTasks();
+  renderTasks();
+}
+
+function renderTasks() {
+  taskList.innerHTML = "";
+  tasks.forEach(function (task) {
+    const li = document.createElement("li");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.done;
+    checkbox.addEventListener("change", function () { toggleTask(task.id); });
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+    if (task.done) span.classList.add("done");
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", function () { editTask(task.id); });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Hapus";
+    deleteBtn.addEventListener("click", function () { deleteTask(task.id); });
+
+    li.append(checkbox, span, editBtn, deleteBtn);
+    taskList.appendChild(li);
+  });
+}
+
+addTaskBtn.addEventListener("click", addTask);
+taskInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") addTask();
+});
+
+renderTasks();
