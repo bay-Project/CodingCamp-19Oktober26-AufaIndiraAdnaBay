@@ -1,16 +1,16 @@
 # Implementation Plan
 
-- [ ] 1. Set up project structure
-- [ ] 1.1 Create `index.html`, `css/style.css`, and `js/script.js`
-- [ ] 1.2 Link CSS and JS files to `index.html`
+- [x] 1. Set up project structure
+- [x] 1.1 Create `index.html`, `css/style.css`, and `js/script.js`
+- [x] 1.2 Link CSS and JS files to `index.html`
 
-- [ ] 2. Greeting
-- [ ] 2.1 Display time and date, updated every second
-- [ ] 2.2 Provide a greeting based on the time of day (morning, afternoon, evening, night)
+- [x] 2. Greeting
+- [x] 2.1 Display time and date, updated every second
+- [x] 2.2 Provide a greeting based on the time of day (morning, afternoon, evening, night)
 
-- [ ] 3. Custom Name in Greeting
-- [ ] 3.1 Include a name input form; save the name to Local Storage
-- [ ] 3.2 Load the saved name when the page opens
+- [x] 3. Custom Name in Greeting
+- [x] 3.1 Include a name input form; save the name to Local Storage
+- [x] 3.2 Load the saved name when the page opens
 
 - [ ] 4. Focus Timer
 - [ ] 4.1 Display a 25:00 timer with Start, Stop, and Reset buttons

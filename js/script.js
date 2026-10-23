@@ -60,3 +60,53 @@ nameInput.addEventListener("keydown", function (event) {
 nameInput.value = userName;
 updateClock();
 setInterval(updateClock, 1000);
+
+// ===== Focus Timer =====
+const timerDisplay = document.getElementById("timer-display");
+const startBtn = document.getElementById("timer-start");
+const stopBtn = document.getElementById("timer-stop");
+const resetBtn = document.getElementById("timer-reset");
+
+const TIMER_DURATION = 1 * 60; // 25 menit dalam detik
+let remaining = TIMER_DURATION;
+let timerId = null;
+let endTime = 0;
+
+function renderTimer() {
+  const minutes = String(Math.floor(remaining / 60)).padStart(2, "0");
+  const seconds = String(remaining % 60).padStart(2, "0");
+  timerDisplay.textContent = minutes + ":" + seconds;
+}
+
+function tick() {
+  remaining = Math.max(0, Math.round((endTime - Date.now()) / 1000));
+  renderTimer();
+  if (remaining === 0) {
+    stopTimer();
+    setTimeout(function () {
+      alert("Waktu fokus selesai! Saatnya istirahat.");
+    }, 50);
+  }
+}
+
+function startTimer() {
+  if (timerId !== null) return; // sudah berjalan
+  if (remaining <= 0) remaining = TIMER_DURATION;
+  endTime = Date.now() + remaining * 1000;
+  timerId = setInterval(tick, 250);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
+}
+
+function resetTimer() {
+  stopTimer();
+  remaining = TIMER_DURATION;
+  renderTimer();
+}
+
+startBtn.addEventListener("click", startTimer);
+stopBtn.addEventListener("click", stopTimer);
+resetBtn.addEventListener("click", resetTimer);
