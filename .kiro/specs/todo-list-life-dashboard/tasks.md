@@ -22,9 +22,9 @@
 - [x] 5.3 Prevent duplicate entries (case-insensitive)
 - [x] 5.4 Sort tasks (by completion status and alphabetically)
 
-- [ ] 6. Quick Links
-- [ ] 6.1 Add links, display them as buttons, and save them to Local Storage
-- [ ] 6.2 Open links in a new tab; provide an option to delete links
+- [x] 6. Quick Links
+- [x] 6.1 Add links, display them as buttons, and save them to Local Storage
+- [x] 6.2 Open links in a new tab; provide an option to delete links
 
 - [ ] 7. Finalization
 - [ ] 7.1 Refine the UI and ensure responsiveness

@@ -1,8 +1,196 @@
+/* ===== Dasar ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+h1,
+h2 {
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+/* ===== Layout ===== */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+#greeting-card {
+  grid-column: 1 / -1; /* kartu greeting selebar halaman */
+  text-align: center;
+}
+
+#greeting {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+#date {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* ===== Form dan tombol ===== */
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#greeting-card .inline-form {
+  justify-content: center;
+}
+
+input[type="text"],
+select {
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 120px;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+button {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.message {
+  min-height: 1.2em;
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: #dc2626;
+}
+
+/* ===== Focus Timer ===== */
+#timer-card {
+  text-align: center;
+}
+
+#timer-display {
+  margin: 8px 0 16px;
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+#timer-stop {
+  background: #6b7280;
+}
+
+#timer-stop:hover {
+  background: #4b5563;
+}
+
+#timer-reset {
+  background: #dc2626;
+}
+
+#timer-reset:hover {
+  background: #b91c1c;
+}
+
+/* ===== To-Do List ===== */
+#todo-card label {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+#task-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+#task-list li span {
+  flex: 1;
+  word-break: break-word;
+}
+
+#task-list li button {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+#task-list li button:last-child {
+  background: #dc2626;
+}
+
+#task-list li button:last-child:hover {
+  background: #b91c1c;
+}
+
 .done {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
+/* ===== Quick Links ===== */
 .link-item {
   display: inline-flex;
   align-items: center;
@@ -16,4 +204,31 @@
   background: #e8eefc;
   color: #1a3a8a;
   text-decoration: none;
+}
+
+.link-item a:hover {
+  background: #d4defa;
+}
+
+.link-item button {
+  padding: 2px 8px;
+  color: #6b7280;
+  background: transparent;
+  font-size: 1.1rem;
+}
+
+.link-item button:hover {
+  color: #dc2626;
+  background: transparent;
+}
+
+/* ===== Responsif (layar kecil) ===== */
+@media (max-width: 700px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
