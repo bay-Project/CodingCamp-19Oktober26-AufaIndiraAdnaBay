@@ -67,7 +67,7 @@ const startBtn = document.getElementById("timer-start");
 const stopBtn = document.getElementById("timer-stop");
 const resetBtn = document.getElementById("timer-reset");
 
-const TIMER_DURATION = 1 * 60; // 25 menit dalam detik
+const TIMER_DURATION = 25 * 60; // 25 menit dalam detik
 let remaining = TIMER_DURATION;
 let timerId = null;
 let endTime = 0;
@@ -128,10 +128,35 @@ function saveTasks() {
   save("tasks", tasks);
 }
 
+let sortMode = load("taskSort", "none");
+if (!["none", "status", "alpha"].includes(sortMode)) sortMode = "none";
+const sortSelect = document.getElementById("sort-select");
+
+function isDuplicate(text, ignoreId) {
+  const lower = text.toLowerCase();
+  return tasks.some(function (t) {
+    return t.id !== ignoreId && t.text.toLowerCase() === lower;
+  });
+}
+
+function getSortedTasks() {
+  const list = tasks.slice(); // salinan, supaya urutan asli tidak berubah
+  if (sortMode === "status") {
+    list.sort(function (a, b) { return Number(a.done) - Number(b.done); });
+  } else if (sortMode === "alpha") {
+    list.sort(function (a, b) { return a.text.localeCompare(b.text); });
+  }
+  return list;
+}
+
 function addTask() {
   const text = taskInput.value.trim();
   if (text === "") {
     showTaskMessage("Tugas tidak boleh kosong.");
+    return;
+  }
+  if (isDuplicate(text)) {
+    showTaskMessage("Tugas ini sudah ada di daftar.");
     return;
   }
   tasks.push({ id: Date.now(), text: text, done: false });
@@ -159,6 +184,11 @@ function editTask(id) {
     showTaskMessage("Tugas tidak boleh kosong.");
     return;
   }
+    if (isDuplicate(trimmed, id)) {
+    showTaskMessage("Tugas ini sudah ada di daftar.");
+    return;
+  }
+
   task.text = trimmed;
   saveTasks();
   showTaskMessage("");
@@ -173,7 +203,7 @@ function deleteTask(id) {
 
 function renderTasks() {
   taskList.innerHTML = "";
-  tasks.forEach(function (task) {
+    getSortedTasks().forEach(function (task) {
     const li = document.createElement("li");
 
     const checkbox = document.createElement("input");
@@ -197,6 +227,12 @@ function renderTasks() {
     taskList.appendChild(li);
   });
 }
+sortSelect.value = sortMode;
+sortSelect.addEventListener("change", function () {
+  sortMode = sortSelect.value;
+  save("taskSort", sortMode);
+  renderTasks();
+});
 
 addTaskBtn.addEventListener("click", addTask);
 taskInput.addEventListener("keydown", function (event) {
