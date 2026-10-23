@@ -203,7 +203,7 @@ function deleteTask(id) {
 
 function renderTasks() {
   taskList.innerHTML = "";
-    getSortedTasks().forEach(function (task) {
+  getSortedTasks().forEach(function (task) {
     const li = document.createElement("li");
 
     const checkbox = document.createElement("input");
@@ -240,3 +240,82 @@ taskInput.addEventListener("keydown", function (event) {
 });
 
 renderTasks();
+
+// ===== Quick Links =====
+const linkNameInput = document.getElementById("link-name");
+const linkUrlInput = document.getElementById("link-url");
+const addLinkBtn = document.getElementById("add-link");
+const linkMessage = document.getElementById("link-message");
+const linksContainer = document.getElementById("links-container");
+
+let quickLinks = load("quickLinks", []);
+if (!Array.isArray(quickLinks)) quickLinks = []; // jaga-jaga kalau data rusak
+
+function saveLinks() {
+  save("quickLinks", quickLinks);
+}
+
+// Rapikan URL: tambahkan https:// kalau belum ada, tolak yang tidak valid
+function normalizeUrl(raw) {
+  let url = raw.trim();
+  if (url === "") return null;
+  if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+    if (!parsed.hostname.includes(".")) return null; // contoh: "abc" bukan situs
+    return parsed.href;
+  } catch (error) {
+    return null;
+  }
+}
+
+function addLink() {
+  const url = normalizeUrl(linkUrlInput.value);
+  if (url === null) {
+    linkMessage.textContent = "URL tidak valid. Contoh: google.com";
+    return;
+  }
+  const name = linkNameInput.value.trim() || new URL(url).hostname;
+  quickLinks.push({ id: Date.now(), name: name, url: url });
+  saveLinks();
+  linkNameInput.value = "";
+  linkUrlInput.value = "";
+  linkMessage.textContent = "";
+  renderLinks();
+}
+
+function deleteLink(id) {
+  quickLinks = quickLinks.filter(function (l) { return l.id !== id; });
+  saveLinks();
+  renderLinks();
+}
+
+function renderLinks() {
+  linksContainer.innerHTML = "";
+  quickLinks.forEach(function (link) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "link-item";
+
+    const anchor = document.createElement("a");
+    anchor.href = link.url;
+    anchor.textContent = link.name;
+    anchor.target = "_blank";          // buka di tab baru
+    anchor.rel = "noopener noreferrer"; // keamanan
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "×";
+    deleteBtn.title = "Hapus link";
+    deleteBtn.addEventListener("click", function () { deleteLink(link.id); });
+
+    wrapper.append(anchor, deleteBtn);
+    linksContainer.appendChild(wrapper);
+  });
+}
+
+addLinkBtn.addEventListener("click", addLink);
+linkUrlInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") addLink();
+});
+
+renderLinks();

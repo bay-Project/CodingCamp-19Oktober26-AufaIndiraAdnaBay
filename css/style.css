@@ -2,3 +2,18 @@
   text-decoration: line-through;
   opacity: 0.6;
 }
+
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 6px 4px 0;
+}
+
+.link-item a {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #e8eefc;
+  color: #1a3a8a;
+  text-decoration: none;
+}
