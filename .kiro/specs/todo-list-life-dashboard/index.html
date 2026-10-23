@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="dashboard">
+
+    <!-- Greeting -->
+    <section class="card" id="greeting-card">
+      <p id="date"></p>
+      <h1 id="time"></h1>
+      <p id="greeting"></p>
+      <div class="inline-form">
+        <input type="text" id="name-input" placeholder="Masukkan namamu">
+        <button id="save-name">Simpan</button>
+      </div>
+    </section>
+
+    <!-- Focus Timer -->
+    <section class="card" id="timer-card">
+      <h2>Focus Timer</h2>
+      <p id="timer-display">25:00</p>
+      <div class="button-row">
+        <button id="timer-start">Start</button>
+        <button id="timer-stop">Stop</button>
+        <button id="timer-reset">Reset</button>
+      </div>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="card" id="todo-card">
+      <h2>To-Do List</h2>
+      <div class="inline-form">
+        <input type="text" id="task-input" placeholder="Tambah tugas baru">
+        <button id="add-task">Tambah</button>
+      </div>
+      <p id="task-message" class="message"></p>
+      <label for="sort-select">Urutkan:</label>
+      <select id="sort-select">
+        <option value="none">Default</option>
+        <option value="status">Status selesai</option>
+        <option value="alpha">Abjad (A-Z)</option>
+      </select>
+      <ul id="task-list"></ul>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="card" id="links-card">
+      <h2>Quick Links</h2>
+      <div class="inline-form">
+        <input type="text" id="link-name" placeholder="Nama (mis. Google)">
+        <input type="text" id="link-url" placeholder="URL (mis. google.com)">
+        <button id="add-link">Tambah</button>
+      </div>
+      <p id="link-message" class="message"></p>
+      <div id="links-container"></div>
+    </section>
+
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
