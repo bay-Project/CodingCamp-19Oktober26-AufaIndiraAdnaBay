@@ -26,7 +26,7 @@
 - [x] 6.1 Add links, display them as buttons, and save them to Local Storage
 - [x] 6.2 Open links in a new tab; provide an option to delete links
 
-- [ ] 7. Finalization
-- [ ] 7.1 Refine the UI and ensure responsiveness
-- [ ] 7.2 Perform manual testing in a browser
-- [ ] 7.3 Push to GitHub and enable GitHub Pages
+- [x] 7. Finalization
+- [x] 7.1 Refine the UI and ensure responsiveness
+- [x] 7.2 Perform manual testing in a browser
+- [x] 7.3 Push to GitHub and enable GitHub Pages

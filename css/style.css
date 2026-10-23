@@ -1,84 +1,139 @@
-/* ===== Dasar ===== */
+
+:root {
+  --bg: #f4f1fb;
+  --text: #1e1b2e;
+  --text-soft: #4b4763;
+
+
+  --violet-from: #4f46e5;
+  --violet-to: #7c3aed;
+  --orange-bg: #ffe2c4;
+  --sky-bg: #d9eaff;
+  --mint-bg: #d3f4e2;
+
+
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+
+  --gray: #4b5563;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+
+  --radius-card: 26px;
+  --radius-item: 14px;
+  --gap: 16px;
+}
+
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 24px 16px;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  padding: 32px 16px;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   line-height: 1.5;
-  color: #1f2937;
-  background: #f3f4f6;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
 }
 
 h1,
 h2 {
   margin: 0 0 12px;
+  font-weight: 700;
 }
 
 h1 {
-  font-size: 2.5rem;
-  letter-spacing: 1px;
+  font-size: 2.2rem;
+  letter-spacing: -0.5px;
 }
 
 h2 {
   font-size: 1.1rem;
-  color: #374151;
 }
 
-/* ===== Layout ===== */
+
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  max-width: 900px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--gap);
+  max-width: 980px;
   margin: 0 auto;
 }
 
 .card {
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  border-radius: var(--radius-card);
 }
 
+
 #greeting-card {
-  grid-column: 1 / -1; /* kartu greeting selebar halaman */
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.22), transparent 45%),
+    linear-gradient(135deg, var(--violet-from), var(--violet-to));
+  --accent: #ffffff;
+  --accent-hover: #ede9fe;
+}
+
+#timer-card {
+  grid-column: span 2;
   text-align: center;
+  background: var(--orange-bg);
+  --accent: #c2410c;
+  --accent-hover: #9a3412;
+}
+
+
+#todo-card {
+  grid-column: span 4;
+  background: var(--sky-bg);
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+}
+
+#links-card {
+  grid-column: span 2;
+  background: var(--mint-bg);
+  --accent: #047857;
+  --accent-hover: #065f46;
 }
 
 #greeting {
-  margin: 0 0 12px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2563eb;
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+  font-weight: 700;
 }
 
 #date {
-  margin: 0;
-  color: #6b7280;
+  margin: 0 0 16px;
+  color: #e0e7ff;
+  font-weight: 500;
 }
 
-/* ===== Form dan tombol ===== */
+
 .inline-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-#greeting-card .inline-form {
-  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 input[type="text"],
 select {
-  padding: 8px 10px;
+  padding: 10px 14px;
   font-size: 0.95rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  font-family: inherit;
+  color: var(--text);
   background: #ffffff;
+  border: 2px solid transparent;
+  border-radius: var(--radius-item);
 }
 
 input[type="text"] {
@@ -86,75 +141,105 @@ input[type="text"] {
   min-width: 120px;
 }
 
+input::placeholder {
+  color: #6b7280;
+}
+
+
 input[type="text"]:focus,
 select:focus {
-  outline: 2px solid #93c5fd;
-  border-color: #2563eb;
+  border-color: var(--accent);
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
 }
 
 button {
-  padding: 8px 14px;
+  padding: 10px 18px;
   font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
   color: #ffffff;
-  background: #2563eb;
+  background: var(--accent);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-item);
   cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 button:hover {
-  background: #1d4ed8;
+  background: var(--accent-hover);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+
+#greeting-card button {
+  color: var(--violet-from);
 }
 
 .message {
   min-height: 1.2em;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   font-size: 0.9rem;
-  color: #dc2626;
+  font-weight: 700;
+  color: var(--danger);
 }
 
-/* ===== Focus Timer ===== */
-#timer-card {
-  text-align: center;
+#greeting-card .message {
+  color: #ffd0d8; 
 }
+
 
 #timer-display {
-  margin: 8px 0 16px;
-  font-size: 3rem;
-  font-weight: 700;
+  margin: 8px auto 18px;
+  padding: 14px 8px;
+  font-size: 2.6rem;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
+  color: #7c2d12;
+  background: #ffffff;
+  border-radius: 18px;
 }
 
 .button-row {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 #timer-stop {
-  background: #6b7280;
+  background: var(--gray);
 }
 
 #timer-stop:hover {
-  background: #4b5563;
+  background: #374151;
 }
 
 #timer-reset {
-  background: #dc2626;
+  background: var(--danger);
 }
 
 #timer-reset:hover {
-  background: #b91c1c;
+  background: var(--danger-hover);
 }
 
-/* ===== To-Do List ===== */
+
 #todo-card label {
   font-size: 0.9rem;
-  color: #6b7280;
+  font-weight: 600;
+  color: var(--text-soft);
 }
 
 #task-list {
-  margin: 12px 0 0;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -162,73 +247,126 @@ button:hover {
 #task-list li {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 0;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border-radius: var(--radius-item);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);
+}
+
+#task-list li input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
 #task-list li span {
   flex: 1;
+  font-weight: 500;
   word-break: break-word;
 }
 
 #task-list li button {
-  padding: 4px 10px;
+  padding: 5px 12px;
   font-size: 0.8rem;
+  border-radius: 10px;
 }
 
 #task-list li button:last-child {
-  background: #dc2626;
+  background: var(--danger);
 }
 
 #task-list li button:last-child:hover {
-  background: #b91c1c;
+  background: var(--danger-hover);
 }
 
 .done {
   text-decoration: line-through;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
-/* ===== Quick Links ===== */
+
+#links-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
 .link-item {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin: 4px 6px 4px 0;
+  gap: 6px;
 }
 
 .link-item a {
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: #e8eefc;
-  color: #1a3a8a;
+  padding: 8px 16px;
+  font-weight: 700;
+  color: #065f46;
   text-decoration: none;
+  background: #ffffff;
+  border-radius: var(--radius-item);
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .link-item a:hover {
-  background: #d4defa;
+  color: #ffffff;
+  background: var(--accent);
 }
 
 .link-item button {
-  padding: 2px 8px;
-  color: #6b7280;
-  background: transparent;
-  font-size: 1.1rem;
+  padding: 2px 9px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  background: var(--danger);
+  border-radius: 50%;
 }
 
 .link-item button:hover {
-  color: #dc2626;
-  background: transparent;
+  background: var(--danger-hover);
 }
 
-/* ===== Responsif (layar kecil) ===== */
-@media (max-width: 700px) {
+
+@media (max-width: 860px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #greeting-card,
+  #todo-card {
+    grid-column: span 2;
+  }
+
+  #timer-card,
+  #links-card {
+    grid-column: span 1;
+  }
+}
+
+
+@media (max-width: 600px) {
   .dashboard {
     grid-template-columns: 1fr;
   }
 
+  #greeting-card,
+  #timer-card,
+  #todo-card,
+  #links-card {
+    grid-column: span 1;
+  }
+
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .link-item a {
+    transition: none;
   }
 }
